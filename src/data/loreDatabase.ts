@@ -2,13 +2,91 @@ import type { LoreDatabase } from '@/types/lore';
 
 export const loreDatabase: LoreDatabase = {
   planets: {
+    mercury: {
+      id: 'mercury',
+      name: 'Mercury',
+      designation: 'SOL-I',
+      category: 'Inner Planets',
+      image: '/images/planets/mercury.jpg',
+      stats: [],
+      sidebarAssets: [],
+      sections: [],
+      moons: [],
+    },
+    venus: {
+      id: 'venus',
+      name: 'Venus',
+      designation: 'SOL-II',
+      category: 'Inner Planets',
+      image: '/images/planets/venus.jpg',
+      stats: [],
+      sidebarAssets: [],
+      sections: [],
+      moons: [],
+    },
+    earth: {
+      id: 'terra',
+      name: 'Terra',
+      designation: 'SOL-III',
+      category: 'Inner Planets',
+      image:
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2574&auto=format&fit=crop',
+      stats: [
+        { label: 'Gravity', value: '1.000 g' },
+        { label: 'Surface Temp (Avg)', value: '14 °C' },
+        { label: 'Atmos. Pressure', value: '1.000 atm' },
+        { label: 'Dark Matter RAMJET', value: 'DISABLED', warning:true },
+      ],
+      sidebarAssets: [
+        { label: 'Space Elevators', value: '0' },
+        { label: 'Defense Platforms', value: '128' },
+      ],
+      sections: [
+        {
+          title: '[01] The Cradle',
+          content:
+            'The ancestral homeworld. Heavily urbanized and suffering from severe ecological scarring. Since the realization of the Antigod threat, Earth has been transformed into a singular, interconnected fortress.',
+        },
+        {
+          title: '[02] The Aegis Ring',
+          content:
+            'Earth is encircled by an artificial ring of orbital habitats, shipyards, and kinetic bombardment platforms collectively known as The Aegis. It filters all incoming traffic.',
+        },
+      ],
+      moons: [
+        {
+          id: 'luna',
+          name: 'Luna',
+          designation: 'SOL-IIIa',
+          category: 'Terran Satellite',
+          image:
+            'https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?q=80&w=2573&auto=format&fit=crop',
+          stats: [
+            { label: 'Gravity', value: '0.166 g' },
+            { label: 'Surface Temp (Avg)', value: '-53 °C' },
+            { label: 'Primary Role', value: 'Shipyards / Command' },
+          ],
+          sidebarAssets: [
+            { label: 'Drydocks', value: '45' },
+            { label: 'Fleet Command', value: 'Active' },
+          ],
+          sections: [
+            {
+              title: '[01] Fleet Command',
+              content:
+                'The dark side of Luna hosts the High Command of the United Fleet. It is the most heavily shielded location in the solar system, utilizing natural lunar rock and synthetic diamonoid plating.',
+            },
+          ],
+        },
+      ],
+    },
     mars: {
       id: 'mars',
       name: 'Mars',
       designation: 'SOL-IV',
       category: 'Inner Planets',
       image:
-        'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=2574&auto=format&fit=crop',
+        '/images/planets/mars_hero.jpg',
       stats: [
         { label: 'Gravity', value: '0.379 g' },
         { label: 'Surface Temp (Avg)', value: '-63 °C' },
@@ -60,69 +138,13 @@ export const loreDatabase: LoreDatabase = {
         },
       ],
     },
-    earth: {
-      id: 'earth',
-      name: 'Terra',
-      designation: 'SOL-III',
-      category: 'Inner Planets',
-      image:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2574&auto=format&fit=crop',
-      stats: [
-        { label: 'Gravity', value: '1.000 g' },
-        { label: 'Surface Temp (Avg)', value: '14 °C' },
-        { label: 'Atmos. Pressure', value: '1.000 atm' },
-        { label: 'Dark Matter Drive', value: 'ENABLED' },
-      ],
-      sidebarAssets: [
-        { label: 'Space Elevators', value: '3' },
-        { label: 'Defense Platforms', value: '128' },
-      ],
-      sections: [
-        {
-          title: '[01] The Cradle',
-          content:
-            'The ancestral homeworld. Heavily urbanized and suffering from severe ecological scarring. Since the realization of the Antigod threat, Earth has been transformed into a singular, interconnected fortress.',
-        },
-        {
-          title: '[02] The Aegis Ring',
-          content:
-            'Earth is encircled by an artificial ring of orbital habitats, shipyards, and kinetic bombardment platforms collectively known as The Aegis. It filters all incoming traffic.',
-        },
-      ],
-      moons: [
-        {
-          id: 'luna',
-          name: 'Luna',
-          designation: 'SOL-IIIa',
-          category: 'Terran Satellite',
-          image:
-            'https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?q=80&w=2573&auto=format&fit=crop',
-          stats: [
-            { label: 'Gravity', value: '0.166 g' },
-            { label: 'Surface Temp (Avg)', value: '-53 °C' },
-            { label: 'Primary Role', value: 'Shipyards / Command' },
-          ],
-          sidebarAssets: [
-            { label: 'Drydocks', value: '45' },
-            { label: 'Fleet Command', value: 'Active' },
-          ],
-          sections: [
-            {
-              title: '[01] Fleet Command',
-              content:
-                'The dark side of Luna hosts the High Command of the United Fleet. It is the most heavily shielded location in the solar system, utilizing natural lunar rock and synthetic diamonoid plating.',
-            },
-          ],
-        },
-      ],
-    },
     jupiter: {
       id: 'jupiter',
       name: 'Jupiter',
       designation: 'SOL-V',
       category: 'Outer Planets',
       image:
-        'https://images.unsplash.com/photo-1614732484003-ef9881555dc3?q=80&w=2574&auto=format&fit=crop',
+        '/images/planets/jupiter.jpeg',
       stats: [
         { label: 'Gravity', value: '2.528 g' },
         { label: 'Surface Temp', value: '-110 °C' },
@@ -189,6 +211,39 @@ export const loreDatabase: LoreDatabase = {
           ],
         },
       ],
+    },
+    saturn: {
+      id: 'saturn',
+      name: 'Saturn',
+      designation: 'SOL-VI',
+      category: 'Outer Planets',
+      image: '/images/planets/saturn.jpg',
+      stats: [],
+      sidebarAssets: [],
+      sections: [],
+      moons: [],
+    },
+    uranus: {
+      id: 'uranus',
+      name: 'Uranus',
+      designation: 'SOL-VII',
+      category: 'Outer Planets',
+      image: '/images/planets/uranus.jpg',
+      stats: [],
+      sidebarAssets: [],
+      sections: [],
+      moons: [],
+    },
+    neptune: {
+      id: 'neptune',
+      name: 'Neptune',
+      designation: 'SOL-VIII',
+      category: 'Outer Planets',
+      image: '/images/planets/neptune.jpg',
+      stats: [],
+      sidebarAssets: [],
+      sections: [],
+      moons: [],
     },
   },
 };
