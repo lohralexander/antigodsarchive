@@ -203,7 +203,8 @@ p {
 .satellite-card-image {
   display: block;
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain;
   transition: transform 1000ms ease-out;
 }
 
@@ -294,8 +295,10 @@ p {
   position: fixed;
   z-index: 0;
   overflow: hidden;
+  background-color: #000;
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain;
   transform-origin: 50% 40%;
   will-change: transform, top, left, width, height, border-radius;
 }

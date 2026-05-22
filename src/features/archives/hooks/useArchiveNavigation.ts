@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { ArchiveHistoryEntry, ArchiveViewState, CelestialRecord } from '@/types/lore';
 import { findParentRecord } from '../utils/archiveHelpers';
 
@@ -8,11 +8,21 @@ export function useArchiveNavigation(records: CelestialRecord[]) {
   const [startRect, setStartRect] = useState<DOMRect | null>(null);
   const [gridScroll, setGridScroll] = useState(0);
   const [viewState, setViewState] = useState<ArchiveViewState>('initial');
+  const pendingRestoreScrollRef = useRef<number | null>(null);
 
   const parentRecord = useMemo(
     () => (activeRecord ? findParentRecord(records, activeRecord.id) : null),
     [activeRecord, records],
   );
+
+  useLayoutEffect(() => {
+    if (activeRecord || pendingRestoreScrollRef.current === null) {
+      return;
+    }
+
+    window.scrollTo({ top: pendingRestoreScrollRef.current, behavior: 'instant' });
+    pendingRestoreScrollRef.current = null;
+  }, [activeRecord, viewState]);
 
   function openRecord(record: CelestialRecord, event?: React.MouseEvent<HTMLElement>) {
     if (event?.currentTarget) {
@@ -39,14 +49,13 @@ export function useArchiveNavigation(records: CelestialRecord[]) {
       setHistory((current) => current.slice(0, -1));
       setActiveRecord(previous.record);
       setViewState('returning');
-      window.scrollTo({ top: previous.scroll, behavior: 'instant' });
       return;
     }
 
     setActiveRecord(null);
     setStartRect(null);
     setViewState('returning');
-    window.scrollTo({ top: gridScroll, behavior: 'instant' });
+    pendingRestoreScrollRef.current = gridScroll;
   }
 
   return {

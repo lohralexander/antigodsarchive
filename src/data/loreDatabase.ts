@@ -7,7 +7,7 @@ export const loreDatabase: LoreDatabase = {
       name: 'Mercury',
       designation: 'SOL-I',
       category: 'Inner Planets',
-      image: '/images/planets/mercury.jpg',
+      image: '/images/planets/mercury.png',
       stats: [],
       sidebarAssets: [],
       sections: [],
@@ -18,7 +18,7 @@ export const loreDatabase: LoreDatabase = {
       name: 'Venus',
       designation: 'SOL-II',
       category: 'Inner Planets',
-      image: '/images/planets/venus.jpg',
+      image: '/images/planets/venus.png',
       stats: [],
       sidebarAssets: [],
       sections: [],
@@ -30,7 +30,7 @@ export const loreDatabase: LoreDatabase = {
       designation: 'SOL-III',
       category: 'Inner Planets',
       image:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2574&auto=format&fit=crop',
+        'images/planets/terra.png',
       stats: [
         { label: 'Gravity', value: '1.000 g' },
         { label: 'Surface Temp (Avg)', value: '14 °C' },
@@ -86,7 +86,7 @@ export const loreDatabase: LoreDatabase = {
       designation: 'SOL-IV',
       category: 'Inner Planets',
       image:
-        '/images/planets/mars_hero.jpg',
+        '/images/planets/mars.png',
       stats: [
         { label: 'Gravity', value: '0.379 g' },
         { label: 'Surface Temp (Avg)', value: '-63 °C' },
@@ -144,7 +144,7 @@ export const loreDatabase: LoreDatabase = {
       designation: 'SOL-V',
       category: 'Outer Planets',
       image:
-        '/images/planets/jupiter.jpeg',
+        '/images/planets/jupiter.png',
       stats: [
         { label: 'Gravity', value: '2.528 g' },
         { label: 'Surface Temp', value: '-110 °C' },
@@ -192,7 +192,7 @@ export const loreDatabase: LoreDatabase = {
           designation: 'SOL-Vd',
           category: 'Jovian Satellite',
           image:
-            'https://images.unsplash.com/photo-1632395627727-3b9afcfeb6cb?q=80&w=2500&auto=format&fit=crop',
+            'images/moons/callisto.png',
           stats: [
             { label: 'Gravity', value: '0.126 g' },
             { label: 'Status', value: 'QUARANTINED', warning: true },
@@ -217,7 +217,7 @@ export const loreDatabase: LoreDatabase = {
       name: 'Saturn',
       designation: 'SOL-VI',
       category: 'Outer Planets',
-      image: '/images/planets/saturn.jpg',
+      image: '/images/planets/saturn.png',
       stats: [],
       sidebarAssets: [],
       sections: [],
@@ -228,7 +228,7 @@ export const loreDatabase: LoreDatabase = {
       name: 'Uranus',
       designation: 'SOL-VII',
       category: 'Outer Planets',
-      image: '/images/planets/uranus.jpg',
+      image: '/images/planets/uranus.png',
       stats: [],
       sidebarAssets: [],
       sections: [],
@@ -239,7 +239,7 @@ export const loreDatabase: LoreDatabase = {
       name: 'Neptune',
       designation: 'SOL-VIII',
       category: 'Outer Planets',
-      image: '/images/planets/neptune.jpg',
+      image: '/images/planets/neptune.png',
       stats: [],
       sidebarAssets: [],
       sections: [],
