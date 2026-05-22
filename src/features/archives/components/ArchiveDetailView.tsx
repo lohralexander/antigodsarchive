@@ -22,43 +22,18 @@ export function ArchiveDetailView({
   const [animPhase, setAnimPhase] = useState<AnimationPhase>(
     startRect ? 'start' : 'done',
   );
+  const [isReadingView, setIsReadingView] = useState(false);
   const animPhaseRef = useRef(animPhase);
   const heroBgRef = useRef<HTMLDivElement | null>(null);
   const heroOverlayRef = useRef<HTMLDivElement | null>(null);
-  const headerTextRef = useRef<HTMLDivElement | null>(null);
+  const detailViewportRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     animPhaseRef.current = animPhase;
   }, [animPhase]);
 
   useEffect(() => {
-    let rafId = 0;
-
-    function handleScroll() {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        if (animPhaseRef.current !== 'done') {
-          return;
-        }
-
-        const y = window.scrollY;
-
-        if (heroBgRef.current) {
-          heroBgRef.current.style.transform = `scale(${1 + y * 0.0003})`;
-        }
-
-        if (heroOverlayRef.current) {
-          heroOverlayRef.current.style.opacity = `${Math.min(0.95, 0.4 + y * 0.0015)}`;
-        }
-
-        if (headerTextRef.current) {
-          headerTextRef.current.style.opacity = `${Math.max(0, 1 - y * 0.002)}`;
-          headerTextRef.current.style.transform = `translateY(-${y * 0.4}px)`;
-        }
-      });
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (startRect && animPhase === 'start') {
       requestAnimationFrame(() => {
@@ -67,26 +42,22 @@ export function ArchiveDetailView({
 
       const timer = window.setTimeout(() => {
         setAnimPhase('done');
-        handleScroll();
       }, 700);
 
       return () => {
-        window.removeEventListener('scroll', handleScroll);
         window.clearTimeout(timer);
-        cancelAnimationFrame(rafId);
       };
     }
-
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      cancelAnimationFrame(rafId);
-    };
   }, [animPhase, record.id, startRect]);
+
+  function handleDetailScroll(event: React.UIEvent<HTMLDivElement>) {
+    const nextReadingView = event.currentTarget.scrollTop >= window.innerHeight * 0.45;
+    setIsReadingView(nextReadingView);
+  }
 
   function handleBackClick() {
     setAnimPhase('closing');
+    setIsReadingView(false);
 
     if (heroBgRef.current) {
       heroBgRef.current.style.transform = 'scale(1)';
@@ -96,7 +67,7 @@ export function ArchiveDetailView({
       heroOverlayRef.current.style.opacity = '0.2';
     }
 
-    window.setTimeout(onBack, 700);
+    window.setTimeout(onBack, 740);
   }
 
   const isAnimating =
@@ -107,7 +78,13 @@ export function ArchiveDetailView({
     : 'SYSTEMS';
 
   return (
-    <div className={`archive-detail ${!startRect ? 'animate-fade-in' : ''}`}>
+    <div
+      className={`archive-detail ${isReadingView ? 'reading-view' : 'hero-view'} ${
+        !startRect ? 'animate-fade-in' : ''
+      }`}
+      ref={detailViewportRef}
+      onScroll={handleDetailScroll}
+    >
       <div
         ref={heroBgRef}
         className="detail-hero-bg"
@@ -133,24 +110,35 @@ export function ArchiveDetailView({
             (animPhase === 'start' || animPhase === 'closing') && startRect
               ? '0.75rem'
               : '0px',
-          transition: isAnimating ? 'all 700ms cubic-bezier(0.32,0.72,0,1)' : 'none',
+          transition: isAnimating ? 'all 700ms cubic-bezier(0.32,0.72,0,1)' : undefined,
         }}
       >
         <div
           ref={heroOverlayRef}
           className="detail-hero-overlay"
           style={{
-            opacity: animPhase === 'start' || animPhase === 'closing' ? 0.2 : 0.4,
-            transition: isAnimating ? 'opacity 700ms ease' : 'none',
+            opacity: animPhase === 'start' || animPhase === 'closing' ? 0.2 : undefined,
+            transition: isAnimating ? 'opacity 700ms ease' : undefined,
           }}
         />
+      </div>
+
+      <div className="compact-planet-bar">
+        <button type="button" onClick={handleBackClick} className="compact-back-button">
+          <ChevronLeft size={16} aria-hidden="true" />
+          {parentRecord ? `Return to ${parentRecord.name}` : 'Return to Directory'}
+        </button>
+        <div>
+          <span>{record.designation}</span>
+          <strong>{record.name}</strong>
+        </div>
       </div>
 
       <div className="detail-foreground">
         <div className="hero-spacer" />
 
         <header className={`detail-header ${showContent ? 'show' : ''}`}>
-          <div ref={headerTextRef} className="detail-header-text">
+          <div className="detail-header-text">
             <button type="button" onClick={handleBackClick} className="back-button">
               <ChevronLeft size={16} aria-hidden="true" />
               {parentRecord ? `Return to ${parentRecord.name}` : 'Return to Directory'}
@@ -163,7 +151,9 @@ export function ArchiveDetailView({
           </div>
         </header>
 
-        <div className={`detail-content-shell ${showContent ? 'show' : ''}`}>
+        <div
+          className={`detail-content-shell ${showContent ? 'show' : ''}`}
+        >
           <div className="detail-content-grid">
             <article className="detail-article">
               {record.moons && record.moons.length > 0 ? (

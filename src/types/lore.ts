@@ -54,3 +54,5 @@ export type ArchiveHistoryEntry = {
   record: CelestialRecord;
   scroll: number;
 };
+
+export type ArchiveViewState = 'initial' | 'returning';

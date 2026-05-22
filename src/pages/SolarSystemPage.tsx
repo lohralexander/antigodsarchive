@@ -11,6 +11,7 @@ export function SolarSystemPage() {
     activeRecord,
     parentRecord,
     startRect,
+    viewState,
     openRecord,
     closeRecord,
   } = useArchiveNavigation(planetRecords);
@@ -18,6 +19,7 @@ export function SolarSystemPage() {
   if (activeRecord) {
     return (
       <ArchiveDetailView
+        key={activeRecord.id}
         record={activeRecord}
         parentRecord={parentRecord}
         startRect={startRect}
@@ -29,7 +31,11 @@ export function SolarSystemPage() {
 
   return (
     <main>
-      <SolarSystemOverview records={planetRecords} onSelectRecord={openRecord} />
+      <SolarSystemOverview
+        records={planetRecords}
+        animate={viewState !== 'returning'}
+        onSelectRecord={openRecord}
+      />
     </main>
   );
 }

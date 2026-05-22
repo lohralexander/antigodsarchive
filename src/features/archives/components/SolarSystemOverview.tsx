@@ -3,15 +3,17 @@ import { PlanetCard } from './PlanetCard';
 
 type SolarSystemOverviewProps = {
   records: CelestialRecord[];
+  animate?: boolean;
   onSelectRecord: (record: CelestialRecord, event: React.MouseEvent<HTMLElement>) => void;
 };
 
 export function SolarSystemOverview({
+  animate = true,
   records,
   onSelectRecord,
 }: SolarSystemOverviewProps) {
   return (
-    <div className="system-directory animate-fade-zoom">
+    <div className={`system-directory ${animate ? 'animate-fade-zoom' : ''}`}>
       <header className="directory-header">
         <h1>System Directory</h1>
         <p>
