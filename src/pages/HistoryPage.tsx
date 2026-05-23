@@ -40,6 +40,11 @@ const historyEvents: HistoryEvent[] = [
   },
 ];
 
+function getHistoryScrollTarget(element: HTMLElement) {
+  const navbarHeight = document.querySelector('.navbar')?.getBoundingClientRect().height ?? 0;
+  return element.getBoundingClientRect().top + window.scrollY - navbarHeight;
+}
+
 export function HistoryPage() {
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -50,17 +55,34 @@ export function HistoryPage() {
       return;
     }
 
-    const animationFrame = requestAnimationFrame(() => {
-      eventRefs.current[selectedEventId]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    });
+    const scrollToSelectedEvent = () => {
+      const selectedElement = eventRefs.current[selectedEventId];
 
-    return () => cancelAnimationFrame(animationFrame);
+      if (!selectedElement) {
+        return;
+      }
+
+      window.scrollTo({
+        top: getHistoryScrollTarget(selectedElement),
+        behavior: 'smooth',
+      });
+    };
+
+    const animationFrame = requestAnimationFrame(scrollToSelectedEvent);
+    const settledAnimation = window.setTimeout(scrollToSelectedEvent, 460);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.clearTimeout(settledAnimation);
+    };
   }, [selectedEventId, isExpanded]);
 
   function selectEvent(eventId: string) {
+    if (selectedEventId === eventId) {
+      closePanel();
+      return;
+    }
+
     setSelectedEventId(eventId);
     setIsExpanded(false);
   }

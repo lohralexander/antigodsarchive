@@ -883,7 +883,6 @@ p {
   grid-template-columns: 2rem minmax(0, 1fr);
   gap: 1.5rem;
   min-height: 9rem;
-  scroll-margin-top: 7rem;
   transition:
     min-height 420ms ease,
     opacity 300ms ease,
