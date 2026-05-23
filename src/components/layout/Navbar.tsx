@@ -1,4 +1,4 @@
-import { Cpu, Database, Globe2, Users } from 'lucide-react';
+import { Cpu, Database, Globe2, ScrollText, Users } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { navigationItems } from '@/data/navigation';
 
@@ -6,6 +6,7 @@ const navIcons = {
   '/': Database,
   '/technology': Cpu,
   '/people': Users,
+  '/history': ScrollText,
 } as const;
 
 export function Navbar() {

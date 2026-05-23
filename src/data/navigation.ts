@@ -7,4 +7,5 @@ export const navigationItems: NavigationItem[] = [
   { label: 'Solar System', path: '/' },
   { label: 'Technology', path: '/technology' },
   { label: 'People', path: '/people' },
+  { label: 'History', path: '/history' },
 ];
