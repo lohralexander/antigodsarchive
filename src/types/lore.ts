@@ -53,6 +53,7 @@ export type LoreDatabase = {
 export type ArchiveHistoryEntry = {
   record: CelestialRecord;
   scroll: number;
+  startRect: DOMRect | null;
 };
 
 export type ArchiveViewState = 'initial' | 'returning';

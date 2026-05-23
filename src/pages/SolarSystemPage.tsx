@@ -9,6 +9,8 @@ const planetRecords = getPlanetRecords(loreDatabase.planets);
 export function SolarSystemPage() {
   const {
     activeRecord,
+    activeRecordScroll,
+    animateFromStartRect,
     parentRecord,
     startRect,
     viewState,
@@ -22,7 +24,9 @@ export function SolarSystemPage() {
         key={activeRecord.id}
         record={activeRecord}
         parentRecord={parentRecord}
+        initialScroll={activeRecordScroll}
         startRect={startRect}
+        animateFromStartRect={animateFromStartRect}
         onBack={closeRecord}
         onDrillDown={openRecord}
       />

@@ -245,5 +245,15 @@ export const loreDatabase: LoreDatabase = {
       sections: [],
       moons: [],
     },
-  },
+      pluto: {
+          id: 'pluto',
+          name: 'Pluto',
+          designation: 'SOL-IX',
+          category: 'Outer Planets',
+          image: '/images/planets/pluto.png',
+          stats: [],
+          sidebarAssets: [],
+          sections: [],
+          moons: [],}
+      },
 };

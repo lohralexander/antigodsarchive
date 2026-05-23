@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AlertCircle, ChevronLeft, Database, Orbit } from 'lucide-react';
 import type { CelestialRecord } from '@/types/lore';
 
@@ -7,7 +7,9 @@ type AnimationPhase = 'start' | 'expanding' | 'done' | 'closing';
 type ArchiveDetailViewProps = {
   record: CelestialRecord;
   parentRecord: CelestialRecord | null;
+  initialScroll: number;
   startRect: DOMRect | null;
+  animateFromStartRect: boolean;
   onBack: () => void;
   onDrillDown: (record: CelestialRecord, event: React.MouseEvent<HTMLElement>) => void;
 };
@@ -15,14 +17,16 @@ type ArchiveDetailViewProps = {
 export function ArchiveDetailView({
   record,
   parentRecord,
+  initialScroll,
   startRect,
+  animateFromStartRect,
   onBack,
   onDrillDown,
 }: ArchiveDetailViewProps) {
   const [animPhase, setAnimPhase] = useState<AnimationPhase>(
-    startRect ? 'start' : 'done',
+    animateFromStartRect && startRect ? 'start' : 'done',
   );
-  const [isReadingView, setIsReadingView] = useState(false);
+  const [isReadingView, setIsReadingView] = useState(initialScroll > 0);
   const animPhaseRef = useRef(animPhase);
   const heroBgRef = useRef<HTMLDivElement | null>(null);
   const heroOverlayRef = useRef<HTMLDivElement | null>(null);
@@ -32,10 +36,18 @@ export function ArchiveDetailView({
     animPhaseRef.current = animPhase;
   }, [animPhase]);
 
+  useLayoutEffect(() => {
+    if (!detailViewportRef.current || initialScroll <= 0) {
+      return;
+    }
+
+    detailViewportRef.current.scrollTop = initialScroll;
+  }, [initialScroll, record.id]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    if (startRect && animPhase === 'start') {
+    if (animateFromStartRect && startRect && animPhase === 'start') {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setAnimPhase('expanding'));
       });
@@ -48,7 +60,7 @@ export function ArchiveDetailView({
         window.clearTimeout(timer);
       };
     }
-  }, [animPhase, record.id, startRect]);
+  }, [animPhase, animateFromStartRect, record.id, startRect]);
 
   function handleDetailScroll(event: React.UIEvent<HTMLDivElement>) {
     const nextReadingView = event.currentTarget.scrollTop >= window.innerHeight * 0.45;
