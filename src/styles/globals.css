@@ -774,6 +774,7 @@ p {
 }
 
 .button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1021,6 +1022,8 @@ p {
 }
 
 .history-detail-actions {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -1033,6 +1036,7 @@ p {
   display: flex;
   min-height: 0;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .history-short-text,
@@ -1042,25 +1046,33 @@ p {
   font-size: 0.875rem;
   letter-spacing: 0.04em;
   line-height: 1.8;
-  transition: opacity 300ms ease, transform 300ms ease;
+  pointer-events: none;
+  transition: opacity 300ms ease, max-height 300ms ease, transform 300ms ease;
+}
+
+.history-short-text {
+  max-height: 12rem;
 }
 
 .history-large-text {
   max-width: 48rem;
-  height: 0;
+  max-height: 0;
   opacity: 0;
+  overflow: hidden;
   transform: translateY(0.75rem);
 }
 
 .history-detail-panel-expanded .history-short-text {
+  max-height: 0;
   opacity: 0;
-  transform: translateY(-1rem);
+  overflow: hidden;
+  transform: translateY(-0.5rem);
 }
 
 .history-detail-panel-expanded .history-large-text {
-  height: auto;
+  max-height: 32rem;
   opacity: 1;
-  transform: translateY(-2.75rem);
+  transform: translateY(0);
   transition-delay: 180ms;
 }
 
