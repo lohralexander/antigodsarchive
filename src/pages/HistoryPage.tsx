@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 type HistoryEvent = {
   id: string;
   date: string;
+  scale: 'major' | 'minor';
   title: string;
   shortText: string;
   largeText: string;
@@ -14,6 +15,7 @@ const historyEvents: HistoryEvent[] = [
   {
     id: 'first-signal',
     date: '2149.03',
+    scale: 'major',
     title: 'First Signal Breach',
     shortText:
       'A deep-system listening array records a repeating pattern from beyond Neptune.',
@@ -23,6 +25,7 @@ const historyEvents: HistoryEvent[] = [
   {
     id: 'mars-interdict',
     date: '2197.11',
+    scale: 'major',
     title: 'Mars Interdict',
     shortText:
       'Orbital governors seal the Martian sky after three ascent corridors vanish in sequence.',
@@ -32,6 +35,7 @@ const historyEvents: HistoryEvent[] = [
   {
     id: 'archive-charter',
     date: '2241.08',
+    scale: 'minor',
     title: 'Archive Charter Ratified',
     shortText:
       'The surviving councils establish the Antigods Archive as an independent record authority.',
@@ -120,7 +124,7 @@ export function HistoryPage() {
             }}
             className={`history-event ${
               selectedEventId === event.id ? 'history-event-active' : ''
-            } ${selectedEventId && selectedEventId !== event.id ? 'history-event-muted' : ''}`}
+            } ${selectedEventId && selectedEventId !== event.id ? 'history-event-muted' : ''} history-event-${event.scale}`}
           >
             <button
               className="history-event-marker"
@@ -136,7 +140,10 @@ export function HistoryPage() {
                 aria-expanded={selectedEventId === event.id}
                 onClick={() => selectEvent(event.id)}
               >
-                <time dateTime={event.date}>{event.date}</time>
+                <span className="history-event-meta">
+                  <time dateTime={event.date}>{event.date}</time>
+                  <span className="history-event-scale">{event.scale}</span>
+                </span>
                 <h2>{event.title}</h2>
               </button>
 
