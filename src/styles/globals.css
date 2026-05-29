@@ -285,7 +285,7 @@ p {
   inset: 0;
   min-height: 100svh;
   overflow-y: auto;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scroll-snap-type: y mandatory;
   overscroll-behavior: contain;
   background: #09090b;
